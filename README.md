@@ -12,7 +12,7 @@ sudo apt istall nginx
 
 ## Cloning and Building the Project
 
-# Create a directory for the project, clone the repository, and build the project:
+### Create a directory for the project, clone the repository, and build the project:
 
 ```
 mkdir -p /home/{yourusername}/app
@@ -22,9 +22,9 @@ cd testApp
 ./mvnw package
 ```
 
-# Moving the Jar File
+## Moving the Jar File
 
-## Move the compiled jar file to the desired directory and set the appropriate permissions:
+### Move the compiled jar file to the desired directory and set the appropriate permissions:
 
 ```
 sudo mkdir -p /var/www/app
@@ -32,15 +32,15 @@ sudo cp target/TestApp-0.0.1-SNAPSHOT.jar /var/www/app/testapp.jar
 sudo chmod 755 /var/www/app/testapp.jar
 ```
 
-# Configuring the systemd Service
+## Configuring the systemd Service
 
-## Create the service file:
+### Create the service file:
 
 ```
 sudo nano /etc/systemd/system/testapp.service
 ```
 
-## Add the following content:
+### Add the following content:
 
 ```
 [Unit]
@@ -60,7 +60,7 @@ Environment=SPRING_PROFILES_ACTIVE=prod
 WantedBy=multi-user.target
 ```
 
-## Reload systemd and start the service:
+### Reload systemd and start the service:
 
 ```
 sudo systemctl daemon-reload
@@ -68,15 +68,15 @@ sudo systemctl start testapp
 sudo systemctl enable testapp
 ```
 
-# Configuring Nginx
+## Configuring Nginx
 
-## Edit the Nginx configuration:
+### Edit the Nginx configuration:
 
 ```
 sudo nano /etc/nginx/sites-available/default
 ```
 
-## Add the following content:
+### Add the following content:
 
 ```
 server {
@@ -96,7 +96,7 @@ server {
 }
 ```
 
-## Restart Nginx:
+### Restart Nginx:
 
 ```
 sudo systemctl restart nginx
