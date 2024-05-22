@@ -69,6 +69,7 @@ sudo systemctl enable testapp
 
 ```
 sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/testapp
+sudo nano /etc/nginx/sites-available/testapp
 ```
 
 ### Add the following content:
