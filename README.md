@@ -19,7 +19,7 @@ mkdir -p /home/{yourusername}/app
 cd /home/{yourusername}/app
 git clone https://github.com/notfoundnone/testApp.git
 cd testApp
-./mvnw package
+sudo mvn clean package
 ```
 
 ## Moving the Jar File
@@ -28,7 +28,7 @@ cd testApp
 
 ```
 sudo mkdir -p /var/www/app
-sudo cp target/TestApp-0.0.1-SNAPSHOT.jar /var/www/app/testapp.jar
+sudo cp target/*.jar /var/www/app/testApp.jar
 sudo chmod 755 /var/www/app/testapp.jar
 ```
 
@@ -44,17 +44,12 @@ sudo nano /etc/systemd/system/testapp.service
 
 ```
 [Unit]
-Description=Simple API for Test
 After=network.target
 
 [Service]
-User=www-data
-WorkingDirectory=/var/www/app
+Type=simple
+User=notfoundnone
 ExecStart=/usr/bin/java -jar /var/www/app/testapp.jar
-Restart=always
-RestartSec=10
-SyslogIdentifier=testapp
-Environment=SPRING_PROFILES_ACTIVE=prod
 
 [Install]
 WantedBy=multi-user.target
@@ -73,7 +68,7 @@ sudo systemctl enable testapp
 ### Edit the Nginx configuration:
 
 ```
-sudo nano /etc/nginx/sites-available/default
+sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/testapp
 ```
 
 ### Add the following content:
@@ -85,19 +80,27 @@ server {
 
     location / {
         proxy_pass http://localhost:8080;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection keep-alive;
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
     }
 }
 ```
+
+### Сreating a symbolic link:
+
+sudo ln -s /etc/nginx/sites-available/testapp /etc/nginx/sites-enabled/
+sudo rm /etc/nginx/sites-enabled/default
 
 ### Restart Nginx:
 
 ```
 sudo systemctl restart nginx
+```
+
+### Setting up a firewall:
+
+```
+sudo ufw allow 80
+sudo ufw allow 8080
+sudo ufw enable
+sudo ufw status
+
 ```
