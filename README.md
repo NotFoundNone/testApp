@@ -28,7 +28,7 @@ sudo mvn clean package
 
 ```
 sudo mkdir -p /var/www/app
-sudo cp target/*.jar /var/www/app/testApp.jar
+sudo cp target/*.jar /var/www/app/testapp.jar
 sudo chmod 755 /var/www/app/testapp.jar
 ```
 
@@ -86,8 +86,10 @@ server {
 
 ### Сreating a symbolic link:
 
+```
 sudo ln -s /etc/nginx/sites-available/testapp /etc/nginx/sites-enabled/
 sudo rm /etc/nginx/sites-enabled/default
+```
 
 ### Restart Nginx:
 
