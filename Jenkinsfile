@@ -25,14 +25,20 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo 'Building project with Maven...'
+                echo 'Building the project...'
                 sh 'mvn clean package'
             }
         }
-        stage('Test') {
+        stage('Docker Build') {
             steps {
-                echo 'Running tests...'
-                sh 'mvn test'
+                echo 'Building Docker image...'
+                sh 'docker build -t myapp:latest .'
+            }
+        }
+        stage('Run Docker') {
+            steps {
+                echo 'Running Docker container...'
+                sh 'docker run -d -p 8081:8081 --name myapp myapp:latest'
             }
         }
     }
