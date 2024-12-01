@@ -1,11 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'jenkins/jenkins:lts-jdk17'
-            args '-u root'
-        }
-    }
-
+    agent any  // Указывает, что любой доступный агент может выполнить pipeline
     stages {
         stage('Prepare Environment') {
             steps {
@@ -39,7 +33,7 @@ pipeline {
         stage('Run Docker') {
             steps {
                 script {
-                    docker.image("myapp:latest").run("-p 8081:8081")  // Пробрасываем порт 8080
+                    docker.image("myapp:latest").run("-p 8080:8080")  // Пробрасываем порт 8080
                 }
             }
         }
