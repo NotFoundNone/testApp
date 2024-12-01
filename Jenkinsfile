@@ -1,5 +1,5 @@
 pipeline {
-    agent any  // Указывает, что любой доступный агент может выполнить pipeline
+    agent { label 'agent' }  // Указывает, что любой доступный агент может выполнить pipeline
     stages {
         stage('Prepare Environment') {
             steps {
