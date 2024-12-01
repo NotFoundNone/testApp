@@ -31,14 +31,16 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                echo 'Building Docker image...'
-                sh 'docker build -t myapp:latest .'
+                script {
+                    docker.build("myapp:latest")  // Создаём Docker-образ
+                }
             }
         }
         stage('Run Docker') {
             steps {
-                echo 'Running Docker container...'
-                sh 'docker run -d -p 8081:8081 --name myapp myapp:latest'
+                script {
+                    docker.image("myapp:latest").run("-p 8081:8081")  // Пробрасываем порт 8080
+                }
             }
         }
     }
